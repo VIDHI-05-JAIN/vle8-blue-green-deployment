@@ -1,0 +1,8 @@
+Project: VLE-8 Blue-Green Deployment
+Container runtime: Docker
+Orchestration: Kubernetes (K3s)
+Deployment strategy: Blue-Green
+Blue deployment: blue-deployment
+Green deployment: green-deployment
+Kubernetes service: vle8-service
+Service NodePort: 30080

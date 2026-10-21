@@ -1,0 +1,26 @@
+---
+- name: Verify VLE-8 Blue-Green deployment environment
+  hosts: localhost
+  connection: local
+  gather_facts: true
+
+  tasks:
+    - name: Check Docker installation
+      ansible.builtin.command: docker --version
+      register: docker_version
+      changed_when: false
+
+    - name: Check Kubernetes node status
+      ansible.builtin.command: kubectl get nodes
+      register: kubernetes_nodes
+      changed_when: false
+      environment:
+        KUBECONFIG: /home/ubuntu/.kube/config
+
+    - name: Display Docker version
+      ansible.builtin.debug:
+        var: docker_version.stdout
+
+    - name: Display Kubernetes node status
+      ansible.builtin.debug:
+        var: kubernetes_nodes.stdout
