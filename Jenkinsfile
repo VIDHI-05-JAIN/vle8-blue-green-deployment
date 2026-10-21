@@ -72,6 +72,8 @@ pipeline {
             }
         }
 
+    }
+
     post {
         success {
             echo 'VLE-8 pipeline completed successfully.'
