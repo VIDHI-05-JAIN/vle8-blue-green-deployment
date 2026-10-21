@@ -47,18 +47,30 @@ pipeline {
             }
         }
 
-        stage('Blue-Green Verification') {
+        stage('Deploy Green') {
             steps {
                 sh '''
                     export KUBECONFIG=/var/lib/jenkins/.kube/config
-                    kubectl rollout status deployment/blue-deployment --timeout=120s
                     kubectl rollout status deployment/green-deployment --timeout=120s
-                    kubectl get pods -o wide
-                    echo "Both Blue and Green deployments are available."
+                    kubectl patch service vle8-service -p '{"spec":{"selector":{"app":"vle8","version":"green"}}}'
+                    sleep 3
+                    curl -fsS http://localhost:30080 | grep -i 'GREEN VERSION'
+                    echo "Green deployment is now active."
                 '''
             }
         }
-    }
+
+        stage('Verify Green Deployment') {
+            steps {
+                sh '''
+                    export KUBECONFIG=/var/lib/jenkins/.kube/config
+                    kubectl get service vle8-service
+                    kubectl get deployments
+                    kubectl get pods
+                    echo "Blue and Green deployments remain available."
+                '''
+            }
+        }
 
     post {
         success {
