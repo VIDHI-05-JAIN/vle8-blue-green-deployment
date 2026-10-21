@@ -39,7 +39,7 @@ pipeline {
         stage('Check Kubernetes') {
             steps {
                 sh '''
-                    export KUBECONFIG=/home/ubuntu/.kube/config
+                    export KUBECONFIG=/var/lib/jenkins/.kube/config
                     kubectl get nodes
                     kubectl get deployments
                     kubectl get service vle8-service
@@ -50,7 +50,7 @@ pipeline {
         stage('Blue-Green Verification') {
             steps {
                 sh '''
-                    export KUBECONFIG=/home/ubuntu/.kube/config
+                    export KUBECONFIG=/var/lib/jenkins/.kube/config
                     kubectl rollout status deployment/blue-deployment --timeout=120s
                     kubectl rollout status deployment/green-deployment --timeout=120s
                     kubectl get pods -o wide
