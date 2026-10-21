@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: green-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vle8
+      version: green
+  template:
+    metadata:
+      labels:
+        app: vle8
+        version: green
+    spec:
+      containers:
+        - name: web
+          image: docker.io/library/vle8-green:1.0
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80
