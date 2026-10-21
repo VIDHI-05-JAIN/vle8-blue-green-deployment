@@ -1,0 +1,10 @@
+# Terraform generated files
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+
+# Sensitive local files
+*.pem
+.env
